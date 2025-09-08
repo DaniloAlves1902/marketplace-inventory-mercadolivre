@@ -7,7 +7,7 @@ public interface Gateway<T> {
 
     T update(T object);
 
-    Void delete(Long id);
+    void delete(Long id);
 
     List<T> getAll();
 
