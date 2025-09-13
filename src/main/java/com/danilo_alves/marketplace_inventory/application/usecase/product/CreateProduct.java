@@ -2,18 +2,18 @@ package com.danilo_alves.marketplace_inventory.application.usecase.product;
 
 import com.danilo_alves.marketplace_inventory.application.gateway.product.ProductGateway;
 import com.danilo_alves.marketplace_inventory.application.usecase.Usecase;
-import com.danilo_alves.marketplace_inventory.domain.entity.product.Product;
+import com.danilo_alves.marketplace_inventory.domain.entity.product.ProductDomain;
 import com.danilo_alves.marketplace_inventory.domain.validator.ProductValidator;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class CreateProduct implements Usecase<Product, Product> {
+public class CreateProduct implements Usecase<ProductDomain, ProductDomain> {
     private final ProductGateway productGateway;
 
     @Override
-    public Product execute(Product product) {
-        ProductValidator.validate(product);
+    public ProductDomain execute(ProductDomain productDomain) {
+        ProductValidator.validate(productDomain);
 
-        return productGateway.save(product);
+        return productGateway.save(productDomain);
     }
 }

@@ -9,7 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Product {
+public class ProductDomain {
     private Long id;
     private String sku;
     private String name;
