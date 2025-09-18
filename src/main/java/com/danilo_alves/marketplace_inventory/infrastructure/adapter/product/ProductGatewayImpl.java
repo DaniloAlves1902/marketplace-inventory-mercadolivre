@@ -56,4 +56,9 @@ public class ProductGatewayImpl implements ProductGateway {
                 .map(productMapper::toDomain)
                 .orElseThrow(() -> new ProductNotFoundException(id));
     }
+
+    @Override
+    public boolean existsBySku(String sku) {
+        return productRepositoryJPA.existsBySku(sku);
+    }
 }
