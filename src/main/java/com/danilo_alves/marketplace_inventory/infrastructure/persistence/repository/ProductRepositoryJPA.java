@@ -4,4 +4,5 @@ import com.danilo_alves.marketplace_inventory.infrastructure.persistence.entity.
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ProductRepositoryJPA extends JpaRepository<ProductEntity, Long> {
+    boolean existsBySku(String sku);
 }
