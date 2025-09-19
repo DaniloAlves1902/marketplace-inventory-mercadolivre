@@ -1,4 +1,4 @@
-package com.danilo_alves.marketplace_inventory.application.dto.product;
+package com.danilo_alves.marketplace_inventory.presentation.dto.product;
 
 import java.util.List;
 import java.util.Map;
