@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/products/")
@@ -27,6 +28,14 @@ public class ProductController {
         ProductResponseDTO response = ProductResponseDTO.fromDomain(createdProduct);
         return ResponseEntity.created(URI.create("/products/" + response.id())).body(response);
     }
+
+    @GetMapping
+    public ResponseEntity<List<ProductResponseDTO>> getAll() {
+        List<ProductDomain> products = getAllProductsUseCase.execute(null);
+        List<ProductResponseDTO> response = ProductResponseDTO.fromDomain(products);
+        return ResponseEntity.ok(response);
+    }
+
 
     private ProductDomain toDomain(ProductRequestDTO dto) {
         return new ProductDomain(
