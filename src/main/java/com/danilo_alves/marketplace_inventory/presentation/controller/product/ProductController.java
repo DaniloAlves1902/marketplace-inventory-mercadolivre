@@ -36,6 +36,13 @@ public class ProductController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductResponseDTO> getById(@PathVariable Long id) {
+        ProductDomain product = getByIdProduct.execute(id);
+        ProductResponseDTO response = ProductResponseDTO.fromDomain(product);
+        return ResponseEntity.ok(response);
+    }
+
     private ProductDomain toDomain(ProductRequestDTO dto) {
         return new ProductDomain(
                 null,
