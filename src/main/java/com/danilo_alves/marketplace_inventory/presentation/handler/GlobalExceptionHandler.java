@@ -1,0 +1,67 @@
+package com.danilo_alves.marketplace_inventory.presentation.handler;
+
+import com.danilo_alves.marketplace_inventory.domain.exception.product.ProductAlreadyExistsException;
+import com.danilo_alves.marketplace_inventory.domain.exception.product.ProductNotFoundException;
+import com.danilo_alves.marketplace_inventory.presentation.dto.error.ApiErrorDTO;
+import jakarta.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.time.OffsetDateTime;
+
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ResponseEntity<ApiErrorDTO> handleProductNotFound(ProductNotFoundException e, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.NOT_FOUND;
+
+        ApiErrorDTO error = ApiErrorDTO.builder()
+                .timestamp(OffsetDateTime.now())
+                .status(status.value())
+                .error("Resource Not Found")
+                .message(e.getMessage())
+                .path(request.getRequestURI())
+                .build();
+
+        return ResponseEntity.status(status).body(error);
+    }
+
+    @ExceptionHandler(ProductAlreadyExistsException.class)
+    public  ResponseEntity<ApiErrorDTO> handleProductAlreadyExists(ProductAlreadyExistsException e, HttpServletRequest request){
+        HttpStatus status = HttpStatus.CONFLICT;
+
+        ApiErrorDTO error = ApiErrorDTO.builder()
+                .timestamp(OffsetDateTime.now())
+                .status(status.value())
+                .error("Resource Already Exists")
+                .message(e.getMessage())
+                .path(request.getRequestURI())
+                .build();
+        return ResponseEntity.status(status).body(error);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiErrorDTO> handleGenericException(Exception e, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+
+        log.error("An unexpected error occurred at path: {}", request.getRequestURI(), e);
+
+        ApiErrorDTO error = ApiErrorDTO.builder()
+                .timestamp(OffsetDateTime.now())
+                .status(status.value())
+                .error("Internal Server Error")
+                .message("An unexpected internal server error has occurred.")
+                .path(request.getRequestURI())
+                .build();
+
+        return ResponseEntity.status(status).body(error);
+    }
+
+}
