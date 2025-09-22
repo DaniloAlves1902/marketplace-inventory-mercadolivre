@@ -15,23 +15,23 @@ import java.util.List;
 @RequestMapping("/api/v1/products/")
 @RequiredArgsConstructor
 public class ProductController {
-    private final CreateProductUseCase createProductUseCase;
-    private final UpdateProductUseCase updateProductUseCase;
-    private final GetAllProductUseCase getAllProductsUseCase;
-    private final GetByIdProductUseCase getByIdProductUseCase;
-    private final DeleteProductUseCase deleteProductUseCase;
+    private final CreateProductUseCase createProduct;
+    private final UpdateProductUseCase updateProduct;
+    private final GetAllProductUseCase getAllProducts;
+    private final GetByIdProductUseCase getByIdProduct;
+    private final DeleteProductUseCase deleteProduct;
 
     @PostMapping
     public ResponseEntity<ProductResponseDTO> create(@RequestBody ProductRequestDTO dto) {
         ProductDomain productToCreate = toDomain(dto);
-        ProductDomain createdProduct = createProductUseCase.execute(productToCreate);
+        ProductDomain createdProduct = createProduct.execute(productToCreate);
         ProductResponseDTO response = ProductResponseDTO.fromDomain(createdProduct);
         return ResponseEntity.created(URI.create("/products/" + response.id())).body(response);
     }
 
     @GetMapping
     public ResponseEntity<List<ProductResponseDTO>> getAll() {
-        List<ProductDomain> products = getAllProductsUseCase.execute(null);
+        List<ProductDomain> products = getAllProducts.execute(null);
         List<ProductResponseDTO> response = ProductResponseDTO.fromDomain(products);
         return ResponseEntity.ok(response);
     }
