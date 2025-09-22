@@ -2,6 +2,8 @@ package com.danilo_alves.marketplace_inventory.infrastructure.config;
 
 import com.danilo_alves.marketplace_inventory.application.gateway.product.ProductGateway;
 import com.danilo_alves.marketplace_inventory.application.usecase.product.*;
+import com.danilo_alves.marketplace_inventory.application.usecase.product.impl.*;
+import com.danilo_alves.marketplace_inventory.infrastructure.decorator.TransactionalCreateProduct;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -10,26 +12,27 @@ public class BeanConfiguration {
 
     @Bean
     public CreateProduct createProduct(ProductGateway productGateway) {
-        return new CreateProduct(productGateway);
+        CreateProductUseCaseUseCase useCase = new CreateProductUseCaseUseCase(productGateway);
+        return new TransactionalCreateProduct(useCase);
     }
 
     @Bean
-    public UpdateProduct updateProduct(ProductGateway productGateway) {
-        return new UpdateProduct(productGateway);
+    public UpdateProductUseCase updateProduct(ProductGateway productGateway) {
+        return new UpdateProductUseCase(productGateway);
     }
 
     @Bean
-    public DeleteProduct deleteProduct(ProductGateway productGateway) {
-        return new DeleteProduct(productGateway);
+    public DeleteProductUseCase deleteProduct(ProductGateway productGateway) {
+        return new DeleteProductUseCase(productGateway);
     }
 
     @Bean
-    public GetAllProduct getAllProduct(ProductGateway productGateway) {
-        return new GetAllProduct(productGateway);
+    public GetAllProductUseCase getAllProduct(ProductGateway productGateway) {
+        return new GetAllProductUseCase(productGateway);
     }
 
     @Bean
-    public GetByIdProduct getByIdProduct(ProductGateway productGateway) {
-        return new GetByIdProduct(productGateway);
+    public GetByIdProductUseCase getByIdProduct(ProductGateway productGateway) {
+        return new GetByIdProductUseCase(productGateway);
     }
 }

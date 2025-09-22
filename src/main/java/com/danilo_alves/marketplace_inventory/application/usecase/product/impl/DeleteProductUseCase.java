@@ -1,11 +1,11 @@
-package com.danilo_alves.marketplace_inventory.application.usecase.product;
+package com.danilo_alves.marketplace_inventory.application.usecase.product.impl;
 
 import com.danilo_alves.marketplace_inventory.application.gateway.product.ProductGateway;
 import com.danilo_alves.marketplace_inventory.application.usecase.Usecase;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class DeleteProduct implements Usecase<Long, Void> {
+public class DeleteProductUseCase implements Usecase<Long, Void> {
     private final ProductGateway productGateway;
 
     @Override

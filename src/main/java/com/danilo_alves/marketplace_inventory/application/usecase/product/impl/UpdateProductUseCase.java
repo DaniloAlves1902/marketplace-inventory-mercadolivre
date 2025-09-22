@@ -1,4 +1,4 @@
-package com.danilo_alves.marketplace_inventory.application.usecase.product;
+package com.danilo_alves.marketplace_inventory.application.usecase.product.impl;
 
 import com.danilo_alves.marketplace_inventory.application.gateway.product.ProductGateway;
 import com.danilo_alves.marketplace_inventory.application.usecase.Usecase;
@@ -6,7 +6,7 @@ import com.danilo_alves.marketplace_inventory.domain.entity.product.ProductDomai
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class UpdateProduct implements Usecase<ProductDomain, ProductDomain> {
+public class UpdateProductUseCase implements Usecase<ProductDomain, ProductDomain> {
     private final ProductGateway productGateway;
 
     @Override
