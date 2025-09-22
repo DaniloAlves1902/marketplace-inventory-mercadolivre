@@ -6,10 +6,7 @@ import com.danilo_alves.marketplace_inventory.presentation.dto.product.ProductRe
 import com.danilo_alves.marketplace_inventory.presentation.dto.product.ProductResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
@@ -17,7 +14,7 @@ import java.net.URI;
 @RequestMapping("/api/v1/products/")
 @RequiredArgsConstructor
 public class ProductController {
-    private final CreateProductUseCase createProduct;
+    private final CreateProductUseCase createProductUseCase;
     private final UpdateProductUseCase updateProductUseCase;
     private final GetAllProductUseCase getAllProductsUseCase;
     private final GetByIdProductUseCase getByIdProductUseCase;
@@ -26,7 +23,7 @@ public class ProductController {
     @PostMapping
     public ResponseEntity<ProductResponseDTO> create(@RequestBody ProductRequestDTO dto) {
         ProductDomain productToCreate = toDomain(dto);
-        ProductDomain createdProduct = createProduct.execute(productToCreate);
+        ProductDomain createdProduct = createProductUseCase.execute(productToCreate);
         ProductResponseDTO response = ProductResponseDTO.fromDomain(createdProduct);
         return ResponseEntity.created(URI.create("/products/" + response.id())).body(response);
     }
