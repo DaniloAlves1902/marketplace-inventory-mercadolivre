@@ -1,6 +1,6 @@
 package com.danilo_alves.marketplace_inventory.presentation.controller.product;
 
-import com.danilo_alves.marketplace_inventory.application.usecase.product.impl.*;
+import com.danilo_alves.marketplace_inventory.application.usecase.product.*;
 import com.danilo_alves.marketplace_inventory.domain.entity.product.ProductDomain;
 import com.danilo_alves.marketplace_inventory.presentation.dto.product.ProductRequestDTO;
 import com.danilo_alves.marketplace_inventory.presentation.dto.product.ProductResponseDTO;
@@ -12,21 +12,21 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/products/")
+@RequestMapping("/api/v1/products")
 @RequiredArgsConstructor
 public class ProductController {
-    private final CreateProductUseCase createProduct;
-    private final UpdateProductUseCase updateProduct;
-    private final GetAllProductUseCase getAllProducts;
-    private final GetByIdProductUseCase getByIdProduct;
-    private final DeleteProductUseCase deleteProduct;
+    private final CreateProduct createProduct;
+    private final UpdateProduct updateProduct;
+    private final GetAllProduct getAllProducts;
+    private final GetByIdProduct getByIdProduct;
+    private final DeleteProduct deleteProduct;
 
     @PostMapping
     public ResponseEntity<ProductResponseDTO> create(@RequestBody ProductRequestDTO dto) {
         ProductDomain productToCreate = toDomain(dto);
         ProductDomain createdProduct = createProduct.execute(productToCreate);
         ProductResponseDTO response = ProductResponseDTO.fromDomain(createdProduct);
-        return ResponseEntity.created(URI.create("/products/" + response.id())).body(response);
+        return ResponseEntity.created(URI.create("/api/v1/products/" + response.id())).body(response);
     }
 
     @GetMapping
@@ -35,7 +35,6 @@ public class ProductController {
         List<ProductResponseDTO> response = ProductResponseDTO.fromDomain(products);
         return ResponseEntity.ok(response);
     }
-
 
     private ProductDomain toDomain(ProductRequestDTO dto) {
         return new ProductDomain(
@@ -54,5 +53,4 @@ public class ProductController {
                 dto.attributes()
         );
     }
-
 }

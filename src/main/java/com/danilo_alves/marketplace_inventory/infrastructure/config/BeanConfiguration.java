@@ -17,22 +17,22 @@ public class BeanConfiguration {
     }
 
     @Bean
-    public UpdateProductUseCase updateProduct(ProductGateway productGateway) {
+    public UpdateProduct updateProduct(ProductGateway productGateway) {
         return new UpdateProductUseCase(productGateway);
     }
 
     @Bean
-    public DeleteProductUseCase deleteProduct(ProductGateway productGateway) {
+    public DeleteProduct deleteProduct(ProductGateway productGateway) {
         return new DeleteProductUseCase(productGateway);
     }
 
     @Bean
-    public GetAllProductUseCase getAllProduct(ProductGateway productGateway) {
+    public GetAllProduct getAllProduct(ProductGateway productGateway) {
         return new GetAllProductUseCase(productGateway);
     }
 
     @Bean
-    public GetByIdProductUseCase getByIdProduct(ProductGateway productGateway) {
+    public GetByIdProduct getByIdProduct(ProductGateway productGateway) {
         return new GetByIdProductUseCase(productGateway);
     }
 }
