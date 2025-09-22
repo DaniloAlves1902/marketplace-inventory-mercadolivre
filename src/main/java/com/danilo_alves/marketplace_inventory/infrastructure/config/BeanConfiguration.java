@@ -12,7 +12,7 @@ public class BeanConfiguration {
 
     @Bean
     public CreateProduct createProduct(ProductGateway productGateway) {
-        CreateProductUseCaseUseCase useCase = new CreateProductUseCaseUseCase(productGateway);
+        CreateProductUseCase useCase = new CreateProductUseCase(productGateway);
         return new TransactionalCreateProduct(useCase);
     }
 
