@@ -29,6 +29,15 @@ public class ProductController {
         return ResponseEntity.created(URI.create("/api/v1/products/" + response.id())).body(response);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<ProductResponseDTO> update(@PathVariable Long id, @RequestBody ProductRequestDTO dto) {
+        ProductDomain productToUpdate = toDomain(dto);
+        productToUpdate.setId(id);
+        ProductDomain updatedProduct = updateProduct.execute(productToUpdate);
+        ProductResponseDTO response = ProductResponseDTO.fromDomain(updatedProduct);
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping
     public ResponseEntity<List<ProductResponseDTO>> getAll() {
         List<ProductDomain> products = getAllProducts.execute(null);
