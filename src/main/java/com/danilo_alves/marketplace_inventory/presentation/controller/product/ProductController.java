@@ -52,6 +52,12 @@ public class ProductController {
         return ResponseEntity.ok(response);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        deleteProduct.execute(id);
+        return ResponseEntity.noContent().build();
+    }
+
     private ProductDomain toDomain(ProductRequestDTO dto) {
         return new ProductDomain(
                 null,
