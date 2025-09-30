@@ -1,50 +1,79 @@
 # Marketplace Inventory - Mercado Livre
 
-Este projeto é uma aplicação **Spring Boot** para gerenciamento de inventário de produtos para o Mercado Livre. Ele fornece uma **API REST** para realizar operações de CRUD (Criar, Ler, Atualizar, Deletar) em produtos.
+Este projeto é uma aplicação **Spring Boot** para gerenciamento de **inventário de produtos e usuários** para o **Mercado Livre**.  
+
+---
 
 ## Funcionalidades
 
-* Criação de novos produtos
-* Atualização de produtos existentes
-* Remoção de produtos
-* Listagem de todos os produtos
-* Busca de um produto específico por ID
+- **Produtos**
+  - Criação de novos produtos
+  - Atualização de produtos existentes
+  - Remoção de produtos
+  - Listagem de todos os produtos
+  - Busca de um produto específico por ID
+
+- **Usuários**
+  - Criação de novos usuários
+  - Atualização de dados de usuários
+  - Remoção de usuários
+  - Busca de usuários por ID
+  - Validação de senha com regras de segurança
+
+- **Outros**
+  - Validação de dados para produtos e usuários
+  - Tratamento de exceções centralizado
+
+---
 
 ## Tecnologias Utilizadas
 
-* **Java 21**
-* **Spring Boot 3.5.5**
-* **Spring Data JPA**: Para persistência de dados
-* **H2 Database**: Banco de dados em memória para ambiente de teste/desenvolvimento
-* **Maven**: Para gerenciamento de dependências
-* **Lombok**: Para reduzir código boilerplate
-* **MapStruct**: Para mapeamento de DTOs e entidades
-* **JUnit 5**: Para testes unitários
+- Java 21  
+- Spring Boot 3.5.5  
+- Spring Data JPA (persistência de dados)  
+- H2 Database (banco em memória para testes/desenvolvimento)  
+- Maven (gerenciamento de dependências)  
+- Lombok (redução de boilerplate)  
+- MapStruct (mapeamento de DTOs e entidades)  
+- JUnit 5 (testes unitários)  
+
+---
 
 ## Arquitetura
 
-O projeto segue uma arquitetura baseada em camadas, separando as responsabilidades em:
+O projeto segue **Clean Architecture** com separação em camadas:
 
-* **Domain**: Contém as entidades de negócio (`ProductDomain`) e as regras de validação (`ProductValidator`)
-* **Application**: Orquestra o fluxo da aplicação, contendo os casos de uso (use cases) e os gateways para a camada de infraestrutura
-* **Infrastructure**: Implementa a persistência de dados (`ProductRepositoryJPA`) e outros detalhes de infraestrutura
-* **Presentation**: Expõe a API REST (`ProductController`) e lida com os DTOs (Data Transfer Objects)
+- **Domain**  
+  Entidades de negócio (`ProductDomain`, `UserDomain`), validadores (`ProductValidator`, `UserValidator`) e exceções customizadas.  
+
+- **Application**  
+  Casos de uso (use cases) e gateways que definem interfaces para a camada de infraestrutura.  
+
+- **Infrastructure**  
+  Implementação da persistência (`ProductRepositoryJPA`, `UserRepositoryJPA`), mapeamento de objetos e configurações.  
+
+- **Presentation**  
+  Exposição da **API REST** (`ProductController`, `UserController`), DTOs e tratamento global de exceções.  
+
+---
 
 ## Configuração
 
-1. **Clone o repositório**
+Clone o repositório:
+
 ```bash
 git clone https://github.com/daniloalves1902/marketplace-inventory-mercadolivre.git
 ````
 
-2. **Acesse o diretório do projeto**
+Acesse o diretório do projeto:
 
 ```bash
 cd marketplace-inventory-mercadolivre
 ```
 
-3. **Configure as credenciais do Mercado Livre**
-   Abra o arquivo `src/main/resources/application.properties` e substitua os placeholders `YOUR-CLIENT-ID`, `YOUR-CLIENT-SECRET` e `YOUR-REDIRECT-URI` com suas credenciais do Mercado Livre.
+### Configure as credenciais do Mercado Livre
+
+Edite o arquivo `src/main/resources/application.properties` e substitua os placeholders:
 
 ```properties
 # Credenciais do Mercado Livre
@@ -57,32 +86,41 @@ mercado-livre.api.base-url=https://api.mercadolibre.com
 mercado-livre.oauth.url=https://auth.mercadolivre.com.br/authorization
 ```
 
+---
+
 ## Como Executar
 
-Você pode executar a aplicação usando o **Maven Wrapper**:
+Com o Maven Wrapper:
 
 ```bash
 ./mvnw spring-boot:run
 ```
 
-A aplicação estará disponível em:
-[http://localhost:8080](http://localhost:8080)
+Aplicação disponível em:
+👉 [http://localhost:8080](http://localhost:8080)
+
+Console do H2 disponível em:
+👉 [http://localhost:8080/h2-console](http://localhost:8080/h2-console)
+
+---
 
 ## API Endpoints
 
-### Produtos
+### 🔹 Produtos
 
-* **`GET /api/v1/products`**: Retorna uma lista de todos os produtos
-* **`GET /api/v1/products/{id}`**: Retorna um produto específico pelo seu ID
-* **`POST /api/v1/products`**: Cria um novo produto
+* `GET /api/v1/products` → Lista todos os produtos
+* `GET /api/v1/products/{id}` → Busca produto por ID
+* `POST /api/v1/products` → Cria novo produto
+* `PUT /api/v1/products/{id}` → Atualiza produto existente
+* `DELETE /api/v1/products/{id}` → Remove produto por ID
 
-**Exemplo de corpo da requisição:**
+**Exemplo de corpo (POST/PUT):**
 
 ```json
 {
   "sku": "EX-PROD-001",
   "name": "Produto de Exemplo",
-  "description": "Descrição detalhada do produto de exemplo, mostrando como a API funciona.",
+  "description": "Descrição do produto de exemplo.",
   "price": 149.90,
   "stock": 15,
   "currencyId": "BRL",
@@ -101,14 +139,39 @@ A aplicação estará disponível em:
 }
 ```
 
-* **`PUT /api/v1/products/{id}`**: Atualiza um produto existente (mesmo corpo do POST)
-* **`DELETE /api/v1/products/{id}`**: Deleta um produto pelo seu ID
+---
+
+### 🔹 Usuários
+
+* `GET /api/v1/users` → Lista todos os usuários
+* `GET /api/v1/users/{id}` → Busca usuário por ID
+* `POST /api/v1/users` → Cria novo usuário
+* `PUT /api/v1/users/{id}` → Atualiza usuário existente
+* `DELETE /api/v1/users/{id}` → Remove usuário por ID
+
+**Exemplo de corpo (POST/PUT):**
+
+```json
+{
+  "name": "Nome do Usuário",
+  "username": "usuarioteste",
+  "password": "Password@123"
+}
+```
+
+#### Regras de Validação da Senha
+
+* Mínimo **8 caracteres**
+* Pelo menos **1 caractere especial**
+* Pelo menos **1 número**
+* Pelo menos **1 letra maiúscula**
 
 ---
 
 ## Observações
 
-* Certifique-se de que o `redirect.uri` seja **idêntico ao configurado no app do Mercado Livre**
-* O projeto usa H2 Database por padrão, ideal para desenvolvimento. Para produção, configure outro banco, se necessário
+* O `redirect.uri` deve ser **idêntico** ao configurado no app do Mercado Livre.
+* O projeto usa **H2 Database** por padrão (ótimo para desenvolvimento).
+  Para produção, configure outro banco no `application.properties`.
 
 ---
