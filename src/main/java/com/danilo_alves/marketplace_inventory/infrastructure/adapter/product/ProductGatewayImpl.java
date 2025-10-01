@@ -14,7 +14,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductGatewayImpl implements ProductGateway {
     private final ProductRepositoryJPA productRepositoryJPA;
-
     private final ProductMapper productMapper;
 
     @Override
@@ -30,9 +29,9 @@ public class ProductGatewayImpl implements ProductGateway {
                 .orElseThrow(() -> new ProductNotFoundException(product.getId()));
 
         var entity = productMapper.toEntity(product);
-        var upadateEntitty = productRepositoryJPA.save(entity);
+        var updateEntity = productRepositoryJPA.save(entity);
 
-        return productMapper.toDomain(upadateEntitty);
+        return productMapper.toDomain(updateEntity);
     }
 
     @Override
