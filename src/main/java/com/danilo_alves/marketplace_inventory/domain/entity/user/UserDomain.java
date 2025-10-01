@@ -1,5 +1,6 @@
 package com.danilo_alves.marketplace_inventory.domain.entity.user;
 
+import com.danilo_alves.marketplace_inventory.domain.entity.user.enums.RoleDomain;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,4 +15,5 @@ public class UserDomain {
     private String name;
     private String username;
     private String password;
+    private RoleDomain roleDomain;
 }

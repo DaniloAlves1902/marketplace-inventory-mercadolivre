@@ -1,5 +1,6 @@
 package com.danilo_alves.marketplace_inventory.infrastructure.persistence.entity.user;
 
+import com.danilo_alves.marketplace_inventory.infrastructure.persistence.entity.user.enums.RoleEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -26,4 +27,7 @@ public class UserEntity {
 
     @NotBlank
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    private RoleEntity roleEntity;
 }

@@ -1,6 +1,7 @@
 package com.danilo_alves.marketplace_inventory.presentation.dto.user;
 
 import com.danilo_alves.marketplace_inventory.domain.entity.user.UserDomain;
+import com.danilo_alves.marketplace_inventory.domain.entity.user.enums.RoleDomain;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,7 +10,8 @@ public record UserResponseDTO(
         String id,
         String name,
         String username,
-        String password
+        String password,
+        RoleDomain role
 ) {
 
     public static UserResponseDTO fromDomain(UserDomain domain) {
@@ -17,7 +19,8 @@ public record UserResponseDTO(
                 domain.getId(),
                 domain.getName(),
                 domain.getUsername(),
-                domain.getPassword()
+                domain.getPassword(),
+                domain.getRoleDomain()
         );
     }
 

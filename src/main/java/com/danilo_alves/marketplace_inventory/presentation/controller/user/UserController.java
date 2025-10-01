@@ -1,10 +1,7 @@
 package com.danilo_alves.marketplace_inventory.presentation.controller.user;
 
 import com.danilo_alves.marketplace_inventory.application.usecase.user.*;
-import com.danilo_alves.marketplace_inventory.domain.entity.product.ProductDomain;
 import com.danilo_alves.marketplace_inventory.domain.entity.user.UserDomain;
-import com.danilo_alves.marketplace_inventory.presentation.dto.product.ProductRequestDTO;
-import com.danilo_alves.marketplace_inventory.presentation.dto.product.ProductResponseDTO;
 import com.danilo_alves.marketplace_inventory.presentation.dto.user.UserRequestDTO;
 import com.danilo_alves.marketplace_inventory.presentation.dto.user.UserResponseDTO;
 import lombok.RequiredArgsConstructor;
@@ -45,7 +42,8 @@ public class UserController {
                 null,
                 dto.name(),
                 dto.username(),
-                dto.password()
+                dto.password(),
+                dto.role()
         );
     }
 }
