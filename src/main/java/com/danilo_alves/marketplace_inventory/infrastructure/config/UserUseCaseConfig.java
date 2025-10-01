@@ -31,7 +31,7 @@ public class UserUseCaseConfig {
     }
 
     @Bean
-    public GetByUsername getByUsername(UserGateway userGateway) {
-        return new GetUserByUsernameUseCase(userGateway);
+    public GetByUsernameUser getByUsername(UserGateway userGateway) {
+        return new GetUserByUsernameUserUseCase(userGateway);
     }
 }
