@@ -4,16 +4,15 @@ import com.danilo_alves.marketplace_inventory.application.usecase.user.*;
 import com.danilo_alves.marketplace_inventory.domain.entity.product.ProductDomain;
 import com.danilo_alves.marketplace_inventory.domain.entity.user.UserDomain;
 import com.danilo_alves.marketplace_inventory.presentation.dto.product.ProductRequestDTO;
+import com.danilo_alves.marketplace_inventory.presentation.dto.product.ProductResponseDTO;
 import com.danilo_alves.marketplace_inventory.presentation.dto.user.UserRequestDTO;
 import com.danilo_alves.marketplace_inventory.presentation.dto.user.UserResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -32,6 +31,13 @@ public class UserController {
         UserDomain createdUser = createUser.execute(userToCreate);
         UserResponseDTO response = UserResponseDTO.fromDomain(createdUser);
         return ResponseEntity.created(URI.create("/api/v1/users" + response.id())).body(response);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<UserResponseDTO>> getAll() {
+        List<UserDomain> users = getAllUsers.execute(null);
+        List<UserResponseDTO> response = UserResponseDTO.fromDomain(users);
+        return ResponseEntity.ok(response);
     }
 
     private UserDomain toDomain(UserRequestDTO dto) {
