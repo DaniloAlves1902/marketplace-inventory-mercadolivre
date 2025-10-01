@@ -11,5 +11,5 @@ public interface Gateway<T, ID> {
 
     List<T> getAll();
 
-    T getById(Long id);
+    T getById(ID id);
 }
