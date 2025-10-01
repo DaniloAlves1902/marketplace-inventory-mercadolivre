@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class BeanConfiguration {
+public class ProductUseCaseConfig {
 
     @Bean
     public CreateProduct createProduct(ProductGateway productGateway) {
