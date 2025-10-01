@@ -10,7 +10,6 @@ public record UserResponseDTO(
         String id,
         String name,
         String username,
-        String password,
         RoleDomain role
 ) {
 
@@ -19,7 +18,6 @@ public record UserResponseDTO(
                 domain.getId(),
                 domain.getName(),
                 domain.getUsername(),
-                domain.getPassword(),
                 domain.getRoleDomain()
         );
     }
