@@ -6,12 +6,13 @@ import com.danilo_alves.marketplace_inventory.application.usecase.user.impl.*;
 import com.danilo_alves.marketplace_inventory.infrastructure.decorator.TransactionalCreateUser;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class UserUseCaseConfig {
     @Bean
-    public CreateUser createUser(UserGateway userGateway) {
-        CreateUser useCase = new CreateUserUsecase(userGateway);
+    public CreateUser createUser(UserGateway userGateway, PasswordEncoder passwordEncoder) {
+        CreateUser useCase = new CreateUserUseCase(userGateway, passwordEncoder);
         return new TransactionalCreateUser(useCase);
     }
 
