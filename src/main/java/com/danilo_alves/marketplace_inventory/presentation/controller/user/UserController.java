@@ -39,8 +39,6 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/{id}")
-
     @GetMapping
     public ResponseEntity<List<UserResponseDTO>> getAll() {
         List<UserDomain> users = getAllUsers.execute(null);
