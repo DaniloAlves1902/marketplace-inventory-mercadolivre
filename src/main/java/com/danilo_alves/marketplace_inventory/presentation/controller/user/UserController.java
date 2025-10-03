@@ -53,6 +53,13 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/username/{username}")
+    public ResponseEntity<UserResponseDTO> getByUsername(@PathVariable String username) {
+        UserDomain user = getByUsernameUser.execute(username);
+        UserResponseDTO response = UserResponseDTO.fromDomain(user);
+        return ResponseEntity.ok(response);
+    }
+
     private UserDomain toDomain(UserRequestDTO dto) {
         return new UserDomain(
                 null,
