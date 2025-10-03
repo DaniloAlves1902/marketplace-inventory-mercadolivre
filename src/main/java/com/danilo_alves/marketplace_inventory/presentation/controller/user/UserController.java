@@ -6,6 +6,7 @@ import com.danilo_alves.marketplace_inventory.presentation.dto.user.UserRequestD
 import com.danilo_alves.marketplace_inventory.presentation.dto.user.UserResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -14,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('ADMIN')")
 public class UserController {
     private final CreateUser createUser;
     private final UpdateUser updateUser;

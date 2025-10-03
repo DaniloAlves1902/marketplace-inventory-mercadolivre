@@ -6,6 +6,7 @@ import com.danilo_alves.marketplace_inventory.presentation.dto.product.ProductRe
 import com.danilo_alves.marketplace_inventory.presentation.dto.product.ProductResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -22,6 +23,7 @@ public class ProductController {
     private final DeleteProduct deleteProduct;
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('HOST', 'ADMIN')")
     public ResponseEntity<ProductResponseDTO> create(@RequestBody ProductRequestDTO dto) {
         ProductDomain productToCreate = toDomain(dto);
         ProductDomain createdProduct = createProduct.execute(productToCreate);
@@ -30,6 +32,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('HOST', 'ADMIN')")
     public ResponseEntity<ProductResponseDTO> update(@PathVariable Long id, @RequestBody ProductRequestDTO dto) {
         ProductDomain productToUpdate = toDomain(dto);
         productToUpdate.setId(id);
@@ -39,6 +42,7 @@ public class ProductController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('HOST', 'ADMIN')")
     public ResponseEntity<List<ProductResponseDTO>> getAll() {
         List<ProductDomain> products = getAllProducts.execute(null);
         List<ProductResponseDTO> response = ProductResponseDTO.fromDomain(products);
@@ -46,6 +50,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('HOST', 'ADMIN')")
     public ResponseEntity<ProductResponseDTO> getById(@PathVariable Long id) {
         ProductDomain product = getByIdProduct.execute(id);
         ProductResponseDTO response = ProductResponseDTO.fromDomain(product);
@@ -53,6 +58,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         deleteProduct.execute(id);
         return ResponseEntity.noContent().build();
