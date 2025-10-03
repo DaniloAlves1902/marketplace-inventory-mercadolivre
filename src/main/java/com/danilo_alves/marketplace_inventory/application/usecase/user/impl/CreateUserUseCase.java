@@ -6,10 +6,12 @@ import com.danilo_alves.marketplace_inventory.domain.entity.user.UserDomain;
 import com.danilo_alves.marketplace_inventory.domain.exception.user.UserAlreadyExistsException;
 import com.danilo_alves.marketplace_inventory.domain.validator.UserValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RequiredArgsConstructor
-public class CreateUserUsecase implements CreateUser {
+public class CreateUserUseCase implements CreateUser {
     private final UserGateway userGateway;
+    private final PasswordEncoder passwordEncoder; // Adicione
 
     @Override
     public UserDomain execute(UserDomain userDomain) {
@@ -17,6 +19,8 @@ public class CreateUserUsecase implements CreateUser {
         if (userGateway.existsByUsername(userDomain.getUsername())) {
             throw new UserAlreadyExistsException(userDomain.getUsername());
         }
+
+        userDomain.setPassword(passwordEncoder.encode(userDomain.getPassword()));
 
         return userGateway.save(userDomain);
     }
