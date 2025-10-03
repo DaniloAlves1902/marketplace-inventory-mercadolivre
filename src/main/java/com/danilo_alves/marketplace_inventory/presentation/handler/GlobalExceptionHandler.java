@@ -4,6 +4,7 @@ import com.danilo_alves.marketplace_inventory.domain.exception.product.ProductAl
 import com.danilo_alves.marketplace_inventory.domain.exception.product.ProductNotFoundException;
 import com.danilo_alves.marketplace_inventory.domain.exception.user.UserAlreadyExistsException;
 import com.danilo_alves.marketplace_inventory.domain.exception.user.UserNotFoundException;
+import com.danilo_alves.marketplace_inventory.domain.exception.user.UsernameNotFoundException;
 import com.danilo_alves.marketplace_inventory.presentation.dto.error.ApiErrorDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
@@ -73,6 +74,20 @@ public class GlobalExceptionHandler {
                 .timestamp(OffsetDateTime.now())
                 .status(status.value())
                 .error("Resource Already Exists")
+                .message(e.getMessage())
+                .path(request.getRequestURI())
+                .build();
+        return ResponseEntity.status(status).body(error);
+    }
+
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public  ResponseEntity<ApiErrorDTO> handleUsernameNotFound(UsernameNotFoundException e, HttpServletRequest request){
+        HttpStatus status = HttpStatus.NOT_FOUND;
+
+        ApiErrorDTO error = ApiErrorDTO.builder()
+                .timestamp(OffsetDateTime.now())
+                .status(status.value())
+                .error("Resource Not Found")
                 .message(e.getMessage())
                 .path(request.getRequestURI())
                 .build();
