@@ -60,6 +60,12 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable String id) {
+        deleteUser.execute(id);
+        return ResponseEntity.noContent().build();
+    }
+
     private UserDomain toDomain(UserRequestDTO dto) {
         return new UserDomain(
                 null,
