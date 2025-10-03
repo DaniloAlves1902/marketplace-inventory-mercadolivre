@@ -30,6 +30,17 @@ public class UserController {
         return ResponseEntity.created(URI.create("/api/v1/users" + response.id())).body(response);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<UserResponseDTO> update(@PathVariable String id, @RequestBody UserRequestDTO dto) {
+        UserDomain userToUpdate = toDomain(dto);
+        userToUpdate.setId(id);
+        UserDomain updatedUser = updateUser.execute(userToUpdate);
+        UserResponseDTO response = UserResponseDTO.fromDomain(updatedUser);
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/{id}")
+
     @GetMapping
     public ResponseEntity<List<UserResponseDTO>> getAll() {
         List<UserDomain> users = getAllUsers.execute(null);
