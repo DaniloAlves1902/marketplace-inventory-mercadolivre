@@ -46,6 +46,13 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResponseDTO> getById(@PathVariable String id) {
+        UserDomain user = getByIdUser.execute(id);
+        UserResponseDTO response = UserResponseDTO.fromDomain(user);
+        return ResponseEntity.ok(response);
+    }
+
     private UserDomain toDomain(UserRequestDTO dto) {
         return new UserDomain(
                 null,
