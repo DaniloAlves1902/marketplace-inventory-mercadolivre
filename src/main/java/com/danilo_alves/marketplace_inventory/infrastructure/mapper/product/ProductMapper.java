@@ -9,9 +9,11 @@ import org.mapstruct.Mapping;
 public interface ProductMapper {
 
     @Mapping(source = "currencyId", target = "currency")
+    @Mapping(source = "listingTypeId", target = "listingType") // Corrigido
     ProductEntity toEntity(ProductDomain productDomain);
 
     @Mapping(source = "currency", target = "currencyId")
+    @Mapping(source = "listingType", target = "listingTypeId") // Corrigido
     ProductDomain toDomain(ProductEntity productEntity);
 
 }
