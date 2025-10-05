@@ -1,4 +1,4 @@
-package com.danilo_alves.marketplace_inventory.infrastructure.config;
+package com.danilo_alves.marketplace_inventory.infrastructure.config.usecase;
 
 import com.danilo_alves.marketplace_inventory.application.gateway.product.ProductGateway;
 import com.danilo_alves.marketplace_inventory.application.usecase.product.*;

@@ -1,4 +1,4 @@
-package com.danilo_alves.marketplace_inventory.infrastructure.config;
+package com.danilo_alves.marketplace_inventory.infrastructure.config.usecase;
 
 import com.danilo_alves.marketplace_inventory.application.gateway.user.UserGateway;
 import com.danilo_alves.marketplace_inventory.application.usecase.user.*;
@@ -29,6 +29,11 @@ public class UserUseCaseConfig {
     @Bean
     public GetAllUser getAllUser(UserGateway userGateway) {
         return new GetAllUsersUseCase(userGateway);
+    }
+
+    @Bean
+    public GetByIdUser getByIdUser(UserGateway userGateway) {
+        return new GetUserByIdUseCase(userGateway);
     }
 
     @Bean
